@@ -17,24 +17,23 @@ export default function Home({ now, envVariable }: HomeProps) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js</a> on Docker Compose!
-        </h1>
-        <h1 className={styles.title}>자동 배포에 성공하셨군요!</h1>
-        <div className={styles.card}>
-          <h3>배포 성공시각</h3>
+        <div>
+          <h2 className={styles.subtitle}>배포에 성공하셨군요!</h2>
           <p>
-            <strong>{now}</strong>
-          </p>
-          <h3>환경변수</h3>
-          <p>
-            <strong>ENV_VARIABLE (서버사이드):</strong> {envVariable}
+            <strong>빌드 시각: </strong> {now}
           </p>
           <p>
-            <strong>NEXT_PUBLIC_ENV_VARIABLE (클라이언트):</strong>{" "}
+            <strong>ENV_VARIABLE: </strong> {envVariable}
+          </p>
+          <p>
+            <strong>NEXT_PUBLIC_ENV_VARIABLE: </strong>
             {process.env.NEXT_PUBLIC_ENV_VARIABLE}
           </p>
         </div>
+
+        <h1 className={styles.title}>
+          Welcome to <a href="https://nextjs.org">Next.js</a> on Docker Compose!
+        </h1>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
