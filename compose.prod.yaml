@@ -1,0 +1,48 @@
+# Docker Compose 프로덕션 설정 파일
+# 이 파일은 Next.js 애플리케이션을 프로덕션 환경에서 실행하기 위한 설정입니다.
+
+services:
+  # Next.js 애플리케이션 서비스 정의
+  next-app:
+    # 컨테이너 이름을 'next-app'으로 지정
+    container_name: next-app
+
+    # Docker 이미지 빌드 설정
+    build:
+      # 빌드 컨텍스트: 현재 디렉토리 (.)를 사용
+      context: .
+      # 사용할 Dockerfile 지정
+      dockerfile: prod.Dockerfile
+      # 빌드 시 전달할 환경변수들
+      args:
+        # 서버 사이드에서만 사용되는 환경변수
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        # 클라이언트 사이드에서도 사용되는 환경변수 (브라우저에서 접근 가능)
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+
+    # 컨테이너가 종료되면 자동으로 재시작
+    restart: always
+
+    # 포트 매핑: 호스트의 3000번 포트를 컨테이너의 3000번 포트와 연결
+    ports:
+      - 3000:3000
+
+    # 컨테이너가 사용할 네트워크 지정
+    networks:
+      - my_network
+
+  # 여기에 추가 컨테이너들을 정의할 수 있습니다 (nginx, postgres, redis 등)
+  # 예시:
+  # nginx:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - my_network
+
+# 네트워크 정의: 컨테이너들이 서로 통신할 수 있도록 네트워크를 생성합니다
+# 컨테이너 이름을 호스트명으로 사용하여 서로 통신할 수 있습니다
+networks:
+  my_network:
+    # 외부에서 생성된 네트워크를 사용 (docker network create my_network로 미리 생성 필요)
+    external: true
