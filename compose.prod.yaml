@@ -29,7 +29,7 @@ services:
 
     # 컨테이너가 사용할 네트워크 지정
     networks:
-      - my_network
+      - npm_network
 
   # 여기에 추가 컨테이너들을 정의할 수 있습니다 (nginx, postgres, redis 등)
   # 예시:
@@ -43,6 +43,6 @@ services:
 # 네트워크 정의: 컨테이너들이 서로 통신할 수 있도록 네트워크를 생성합니다
 # 컨테이너 이름을 호스트명으로 사용하여 서로 통신할 수 있습니다
 networks:
-  my_network:
-    # 외부에서 생성된 네트워크를 사용 (docker network create my_network로 미리 생성 필요)
+  npm_network:
+    # 외부에서 생성된 네트워크를 사용 (docker network create npm_network로 미리 생성 필요)
     external: true
