@@ -1,9 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { GetStaticProps } from "next";
 
-export default function Home() {
-  const now = new Date();
+interface HomeProps {
+  now: string;
+}
+
+export default function Home({ now }: HomeProps) {
   return (
     <div className={styles.container}>
       <Head>
@@ -71,3 +75,13 @@ export default function Home() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  const now = new Date().toLocaleString();
+
+  return {
+    props: {
+      now,
+    },
+  };
+};
