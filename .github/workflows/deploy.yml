@@ -15,7 +15,11 @@ jobs:
             set -e
             trap 'echo "Deploy failed at line $LINENO"' ERR
             ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            cd ~/${{ github.event.repository.name }} 2>/dev/null || git clone --depth 1 git@github.com:${{ github.repository }}.git ~/${{ github.event.repository.name }} && cd ~/${{ github.event.repository.name }}
+            REPO_DIR=~/${{ github.event.repository.name }}
+            [ -d "$REPO_DIR/.git" ] || rm -rf "$REPO_DIR"
+            [ -d "$REPO_DIR/.git" ] || git clone --depth 1 https://github.com/${{ github.repository }}.git "$REPO_DIR"
+            cd "$REPO_DIR"
+            git remote set-url origin https://github.com/${{ github.repository }}.git
             git fetch --prune --depth=1 origin main
             git reset --hard origin/main
             docker compose -f compose.prod.yaml build --pull
