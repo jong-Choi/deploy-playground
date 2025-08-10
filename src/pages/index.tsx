@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const now = new Date();
   return (
     <div className={styles.container}>
       <Head>
@@ -14,6 +15,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js</a> on Docker Compose!
         </h1>
+        <h1 className={styles.title}>자동 배포에 성공하셨군요!</h1>
+        <p className={styles.description}>{now.toLocaleString()}</p>
 
         <p className={styles.description}>
           Get started by editing{" "}
