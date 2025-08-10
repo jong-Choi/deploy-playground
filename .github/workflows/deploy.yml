@@ -5,9 +5,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: appleboy/ssh-action@v1.2.0
+        env:
+          ENV_VARIABLE: ${{ secrets.ENV_VARIABLE }}
+          NEXT_PUBLIC_ENV_VARIABLE: ${{ vars.NEXT_PUBLIC_ENV_VARIABLE }}
         with:
+          envs: ENV_VARIABLE,NEXT_PUBLIC_ENV_VARIABLE
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}

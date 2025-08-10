@@ -5,9 +5,10 @@ import { GetStaticProps } from "next";
 
 interface HomeProps {
   now: string;
+  envVariable: string;
 }
 
-export default function Home({ now }: HomeProps) {
+export default function Home({ now, envVariable }: HomeProps) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,12 +21,20 @@ export default function Home({ now }: HomeProps) {
           Welcome to <a href="https://nextjs.org">Next.js</a> on Docker Compose!
         </h1>
         <h1 className={styles.title}>자동 배포에 성공하셨군요!</h1>
-        <p className={styles.description}>{now.toLocaleString()}</p>
-
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        <div className={styles.card}>
+          <h3>배포 성공시각</h3>
+          <p>
+            <strong>{now}</strong>
+          </p>
+          <h3>환경변수</h3>
+          <p>
+            <strong>ENV_VARIABLE (서버사이드):</strong> {envVariable}
+          </p>
+          <p>
+            <strong>NEXT_PUBLIC_ENV_VARIABLE (클라이언트):</strong>{" "}
+            {process.env.NEXT_PUBLIC_ENV_VARIABLE}
+          </p>
+        </div>
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -78,10 +87,13 @@ export default function Home({ now }: HomeProps) {
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const now = new Date().toLocaleString();
+  const envVariable =
+    process.env.ENV_VARIABLE || "환경변수가 설정되지 않았습니다";
 
   return {
     props: {
       now,
+      envVariable,
     },
   };
 };
