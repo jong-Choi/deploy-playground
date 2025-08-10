@@ -18,6 +18,7 @@ jobs:
             REPO_DIR=~/${{ github.event.repository.name }}
             [ -d "$REPO_DIR/.git" ] || git clone --depth 1 https://github.com/${{ github.repository }}.git "$REPO_DIR"
             cd "$REPO_DIR"
-            git pull --depth=1 origin main
+            git fetch --prune --depth=1 origin main
+            git reset --hard origin/main
             docker compose -f compose.prod.yaml build --pull
             docker compose -f compose.prod.yaml up -d --remove-orphans
